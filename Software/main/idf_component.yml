@@ -1,5 +1,8 @@
 dependencies:
+  espressif/esp_encrypted_img: "^2.0.1"
   espressif/button: "^3.2.0"
   idf:
     version: ">=4.1.0"
+  ble_ota:
+    version: "~0.1.12"
 

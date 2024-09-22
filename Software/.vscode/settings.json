@@ -23,7 +23,9 @@
         "random": "c",
         "regex": "c",
         "xlocale": "c",
-        "spi_types.h": "c"
+        "spi_types.h": "c",
+        "tpl0501.h": "c",
+        "clk_tree_defs.h": "c"
     },
     "idf.flashType": "UART",
     "idf.portWin": "COM20"
