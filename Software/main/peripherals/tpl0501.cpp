@@ -49,7 +49,7 @@ void TPL0501::init(spi_host_device_t spiHost, int mosiPin, int sclkPin)
 bool TPL0501::setValue(uint8_t resValue, gpio_num_t csPin) {
     if (!isInited)
     {
-        return;
+        return false;
     }
 
     esp_err_t ret;
