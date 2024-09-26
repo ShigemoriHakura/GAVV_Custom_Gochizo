@@ -62,11 +62,36 @@ dependencies:
     source:
       type: idf
     version: 5.3.0
+  plasmapper/pl_common:
+    component_hash: bc77bf671462e34ba957e32182ed8f77c8eca31edf125cfc57a19d7b74de1db0
+    dependencies:
+    - name: idf
+      require: private
+      version: ^5.0
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    version: 1.2.2
+  plasmapper/pl_nvs:
+    component_hash: 2b6a231b7f5fc94653b32f60c9ecbe91519dce51c6bd1e8ad91fe4d5d3196f2d
+    dependencies:
+    - name: idf
+      require: private
+      version: ^5.0
+    - name: plasmapper/pl_common
+      registry_url: https://components.espressif.com/
+      require: private
+      version: ^1.0.0
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    version: 1.0.0
 direct_dependencies:
 - espressif/ble_ota
 - espressif/button
 - espressif/esp_encrypted_img
 - idf
-manifest_hash: b6e561c7eef531231ed9ddf95d696d14c22671fade4c0f8e8c5bb09fa508e703
+- plasmapper/pl_nvs
+manifest_hash: 6b50406a4069decc52e0a0bffdf2b33c9716bd47563f500864b869480c30d4b6
 target: esp32c3
 version: 2.0.0
