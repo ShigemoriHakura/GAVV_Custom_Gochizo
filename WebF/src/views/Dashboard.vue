@@ -130,6 +130,14 @@ function onDisconnected() {
   isConnected.value = false
 }
 
+function disconnectGochizo(){
+  if (!isConnected.value) {
+    return
+  }
+  serverD.value.disconnect()
+  isConnected.value = false
+}
+
 function calcSPIToRes(value) {
   return parseInt((255 - value) / 255 * 10000) / 100
 }
@@ -195,7 +203,7 @@ function changeGozhicoValue(rA, rB) {
                   <hr>
                   <div class="row sm-4">
                     <div class="col-sm">
-                      <argon-button full-width color="danger" variant="contained">断开链接</argon-button>
+                      <argon-button @click="disconnectGochizo()" full-width color="danger" variant="contained">断开链接</argon-button>
                       <br><br>
                     </div>
                     <div class="col-sm">
