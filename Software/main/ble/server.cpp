@@ -13,14 +13,29 @@
 #include "../gochizo/gochizo.h"
 
 NimBLECharacteristic *statusCharacteristic;
-NimBLECharacteristic *rrACharacteristic;
-NimBLECharacteristic *rrBCharacteristic;
-NimBLECharacteristic *actionCharacteristic;
 
 static const char *TAG_BLE = "BLE";
 
+class ServerCallbacks: public NimBLEServerCallbacks {
+    void onConnect(NimBLEServer* pServer, NimBLEConnInfo& connInfo) {
+        printf("Client address: %s\n", connInfo.getAddress().toString().c_str());
+    };
+
+    void onDisconnect(NimBLEServer* pServer, NimBLEConnInfo& connInfo, int reason) {
+        printf("Client disconnected - start advertising\n");
+        NimBLEDevice::startAdvertising();
+    };
+};
+
 class ProvCallbacks : public NimBLECharacteristicCallbacks
 {
+    void onRead(NimBLECharacteristic* pCharacteristic, NimBLEConnInfo& connInfo)
+    {
+        printf("%s : onRead(), value: %s\n",
+               pCharacteristic->getUUID().toString().c_str(),
+               pCharacteristic->getValue().c_str());
+    }
+
     void onWrite(NimBLECharacteristic *characteristic, NimBLEConnInfo &connInfo)
     {
         std::string rxValue = characteristic->getValue();
@@ -30,12 +45,15 @@ class ProvCallbacks : public NimBLECharacteristicCallbacks
         {
         case 1U:
             Gochizo::getInstance().setValue(rxValue.c_str()[1], rxValue.c_str()[2], true);
+            MBLEServer::getInstance().syncState();
             break;
         case 2U:
             Gochizo::getInstance().plug();
+            MBLEServer::getInstance().syncState();
             break;
         case 3U:
             Gochizo::getInstance().unPlug();
+            MBLEServer::getInstance().syncState();
             break;
         case 4U:
             Gochizo::getInstance().unPlug();
@@ -89,8 +107,9 @@ void MBLEServer::init()
     }
     ESP_LOGI(TAG_BLE, "Using ID: %s", buffer);
 
-    NimBLEDevice::init(buffer);
+    NimBLEDevice::init("GAVV");
     NimBLEServer *pServer = NimBLEDevice::createServer();
+    pServer->setCallbacks(new ServerCallbacks());
     pServer->advertiseOnDisconnect(true);
     ESP_LOGI(TAG_BLE, "Init BLE Service");
     NimBLEService *pService = pServer->createService(SERVICE_UUID);

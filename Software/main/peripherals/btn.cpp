@@ -45,6 +45,7 @@ void Btn::init()
 
     ESP_LOGI(TAG, "Enabling EXT0 wakeup on pin GPIO %d", PIN_Wake);
     ESP_ERROR_CHECK(esp_deep_sleep_enable_gpio_wakeup(BIT(PIN_Wake), ESP_GPIO_WAKEUP_GPIO_HIGH));
+
     ESP_LOGI(TAG, "Enabling EXT0 wakeup on pin GPIO %d", PIN_G02);
     ESP_ERROR_CHECK(esp_deep_sleep_enable_gpio_wakeup(BIT(PIN_G02), ESP_GPIO_WAKEUP_GPIO_HIGH));
 
