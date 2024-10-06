@@ -36,6 +36,14 @@
                     </tr>
                     <tr>
                         <td>
+                            <p class="text-xs font-weight-bold mb-0">235</p>
+                        </td>
+                        <td>
+                            <p class="text-xs font-weight-bold mb-0">8.2k</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
                             <p class="text-xs font-weight-bold mb-0">230</p>
                         </td>
                         <td>

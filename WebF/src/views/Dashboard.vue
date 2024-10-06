@@ -7,8 +7,8 @@ import GochizoTable from "./components/GochizoTable.vue";
 import gochizo_default from "@/assets/img/gochizo/gochizo_default.png";
 
 /*
-//                            5.6k 6.8k 10k  12k  16k  20k  24k  30k  39k  47k  62k
-const int RrX_final_array[] = {242, 239, 230, 225, 215, 204, 195, 179, 156, 135, 97};
+//                            5.6k  6.8k 8.2k 10k  12k  16k  20k  24k  30k  39k  47k  62k
+const int RrX_final_array[] = {242, 239, 235, 230, 225, 215, 204, 195, 179, 156, 135, 97};
 */
 const gochizoArchive = {
   A017: {
@@ -23,10 +23,70 @@ const gochizoArchive = {
     RrB: "135",
     image: gochizo_default,
   },
-  A099: {
+  A105: {
     name: "假面骑士W",
     RrA: "225",
     RrB: "195",
+    image: gochizo_default,
+  },
+  A106: {
+    name: "假面骑士OOO",
+    RrA: "225",
+    RrB: "204",
+    image: gochizo_default,
+  },
+  A107: {
+    name: "假面骑士Fource",
+    RrA: "225",
+    RrB: "215",
+    image: gochizo_default,
+  },
+  A108: {
+    name: "假面骑士Wizard",
+    RrA: "225",
+    RrB: "225",
+    image: gochizo_default,
+  },
+  A109: {
+    name: "假面骑士铠武",
+    RrA: "225",
+    RrB: "230",
+    image: gochizo_default,
+  },
+  A110: {
+    name: "假面骑士Drive",
+    RrA: "225",
+    RrB: "235",
+    image: gochizo_default,
+  },
+  A111: {
+    name: "假面骑士Ghost",
+    RrA: "225",
+    RrB: "239",
+    image: gochizo_default,
+  },
+  A112: {
+    name: "假面骑士EX-Aid",
+    RrA: "225",
+    RrB: "242",
+    image: gochizo_default,
+  },
+  A113: {
+    name: "假面骑士Build",
+    RrA: "230",
+    RrB: "97",
+    image: gochizo_default,
+  },
+  A114: {
+    name: "假面骑士Zio",
+    RrA: "230",
+    RrB: "135",
+    image: gochizo_default,
+  },
+  A115: {
+    name: "假面骑士01",
+    RrA: "230",
+    RrB: "156",
     image: gochizo_default,
   },
 };
@@ -254,13 +314,13 @@ function changeGozhicoValue(rA, rB) {
                       <td>
                         <div class="text-center">
                           <p class="mb-0 text-xs font-weight-bold">RrA:(A电阻)</p>
-                          <h6 class="mb-0 text-sm">{{ gochizo.RrA }}({{ calcSPIToRes(gochizo.RrA) }})</h6>
+                          <h6 class="mb-0 text-sm">{{ gochizo.RrA }}({{ calcSPIToRes(gochizo.RrA) }}k)</h6>
                         </div>
                       </td>
                       <td>
                         <div class="text-center">
                           <p class="mb-0 text-xs font-weight-bold">RrB:(A电阻)</p>
-                          <h6 class="mb-0 text-sm">{{ gochizo.RrB }}({{ calcSPIToRes(gochizo.RrB) }})</h6>
+                          <h6 class="mb-0 text-sm">{{ gochizo.RrB }}({{ calcSPIToRes(gochizo.RrB) }}k)</h6>
                         </div>
                       </td>
                       <td>
