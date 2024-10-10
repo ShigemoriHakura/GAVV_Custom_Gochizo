@@ -33,6 +33,32 @@ extern "C" void app_main(void)
 
     print_wakeup_reason();
 
+    gpio_set_direction(PIN_Wake, GPIO_MODE_INPUT);
+    gpio_set_pull_mode(PIN_Wake, GPIO_PULLUP_ONLY);
+
+    gpio_set_direction(PIN_LED, GPIO_MODE_OUTPUT_OD);
+    gpio_set_pull_mode(PIN_LED, GPIO_PULLUP_ONLY);
+    gpio_set_level(PIN_LED, 0);
+
+    gpio_config_t cfg = {
+        .pin_bit_mask = BIT64(PIN_G02),
+        .mode = GPIO_MODE_INPUT,
+        .pull_up_en = GPIO_PULLUP_DISABLE,
+        .pull_down_en = GPIO_PULLDOWN_DISABLE,
+        .intr_type = GPIO_INTR_DISABLE,
+    };
+    gpio_config(&cfg);
+
+    gpio_deep_sleep_hold_en();
+    
+
+    ESP_LOGI(TAG, "Enabling EXT0 wakeup on pin GPIO %d", PIN_Wake);
+    ESP_ERROR_CHECK(esp_deep_sleep_enable_gpio_wakeup(BIT(PIN_Wake), ESP_GPIO_WAKEUP_GPIO_LOW));
+
+    ESP_LOGI(TAG, "Enabling EXT0 wakeup on pin GPIO %d", PIN_G02);
+    ESP_ERROR_CHECK(esp_deep_sleep_enable_gpio_wakeup(BIT(PIN_G02), ESP_GPIO_WAKEUP_GPIO_HIGH));
+
+
     Config::getInstance().init();
     Gochizo::getInstance().init();
     TPL0501::getInstance().init(Res_HOST, PIN_NUM_MOSI, PIN_NUM_CLK);
@@ -83,7 +109,7 @@ void print_wakeup_reason()
 
 static void check_wakeup()
 {
-    if (gpio_get_level(PIN_Wake) || gpio_get_level(PIN_G02))
+    if (!gpio_get_level(PIN_Wake) || gpio_get_level(PIN_G02))
     {
         return;
     }

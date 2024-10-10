@@ -82,7 +82,7 @@ void Gochizo::setGPIO(gpio_num_t gpio)
 void Gochizo::resetGPIO(gpio_num_t gpio)
 {
     gpio_config_t cfg = {
-        .pin_bit_mask = BIT64(PIN_G01),
+        .pin_bit_mask = BIT64(gpio),
         .mode = GPIO_MODE_DISABLE,
         .pull_up_en = GPIO_PULLUP_DISABLE,
         .pull_down_en = GPIO_PULLDOWN_DISABLE,

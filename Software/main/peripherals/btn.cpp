@@ -38,17 +38,6 @@ void Btn::init()
     isInited = true;
     ESP_LOGI(TAG, "Initializing button");
 
-    gpio_set_direction(PIN_Wake, GPIO_MODE_INPUT);
-    gpio_set_pull_mode(PIN_Wake, GPIO_PULLUP_PULLDOWN);
-    gpio_set_direction(PIN_G02, GPIO_MODE_INPUT);
-    gpio_set_pull_mode(PIN_G02, GPIO_FLOATING);
-
-    ESP_LOGI(TAG, "Enabling EXT0 wakeup on pin GPIO %d", PIN_Wake);
-    ESP_ERROR_CHECK(esp_deep_sleep_enable_gpio_wakeup(BIT(PIN_Wake), ESP_GPIO_WAKEUP_GPIO_HIGH));
-
-    ESP_LOGI(TAG, "Enabling EXT0 wakeup on pin GPIO %d", PIN_G02);
-    ESP_ERROR_CHECK(esp_deep_sleep_enable_gpio_wakeup(BIT(PIN_G02), ESP_GPIO_WAKEUP_GPIO_HIGH));
-
     button_config_t gpio_btn_cfg = {
         .type = BUTTON_TYPE_GPIO,
         .gpio_button_config = {
