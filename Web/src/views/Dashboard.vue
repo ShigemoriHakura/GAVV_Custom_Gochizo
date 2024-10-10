@@ -8,7 +8,7 @@ import gochizo_default from "@/assets/img/gochizo/gochizo_default.png";
 
 /*
 //                            5.6k  6.8k 8.2k 10k  12k  16k  20k  24k  30k  39k  47k  62k
-const int RrX_final_array[] = {242, 239, 235, 230, 225, 215, 204, 195, 179, 156, 135, 97};
+const int RrX_final_array[] = {242, 239, 237, 232, 225, 215, 207, 195, 179, 156, 135, 97};
 */
 const gochizoArchive = {
   A017: {
@@ -32,7 +32,7 @@ const gochizoArchive = {
   A106: {
     name: "假面骑士OOO",
     RrA: "225",
-    RrB: "204",
+    RrB: "207",
     image: gochizo_default,
   },
   A107: {
@@ -50,13 +50,13 @@ const gochizoArchive = {
   A109: {
     name: "假面骑士铠武",
     RrA: "225",
-    RrB: "230",
+    RrB: "232",
     image: gochizo_default,
   },
   A110: {
     name: "假面骑士Drive",
     RrA: "225",
-    RrB: "235",
+    RrB: "237",
     image: gochizo_default,
   },
   A111: {
@@ -73,19 +73,19 @@ const gochizoArchive = {
   },
   A113: {
     name: "假面骑士Build",
-    RrA: "230",
+    RrA: "232",
     RrB: "97",
     image: gochizo_default,
   },
   A114: {
     name: "假面骑士Zio",
-    RrA: "230",
+    RrA: "232",
     RrB: "135",
     image: gochizo_default,
   },
   A115: {
     name: "假面骑士01",
-    RrA: "230",
+    RrA: "232",
     RrB: "156",
     image: gochizo_default,
   },
@@ -206,7 +206,7 @@ function setDeviceStatus(status) {
   if (!isConnected.value) {
     return
   }
-  var hexStr = "" + zeroPad(status, 2) + RrA.value.toString(16) + RrB.value.toString(16) + "00"
+  var hexStr = "" + zeroPad(status, 2) + parseInt(RrA.value, 10).toString(16) + parseInt(RrB.value, 10).toString(16) + "00"
   console.log(hexStr)
   stCharacteristic.value.writeValueWithoutResponse(decodeHex(hexStr))
   if (status == 4) {
