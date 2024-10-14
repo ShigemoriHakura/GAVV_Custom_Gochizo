@@ -29,34 +29,16 @@ static void check_wakeup();
 extern "C" void app_main(void)
 {
     ESP_LOGI(TAG, "HW: V2.11");
-    ESP_LOGI(TAG, "FW: V1.0.10");
+    ESP_LOGI(TAG, "FW: V1.0.12");
 
     print_wakeup_reason();
-
-    gpio_set_direction(PIN_Wake, GPIO_MODE_INPUT);
-    gpio_set_pull_mode(PIN_Wake, GPIO_PULLUP_ONLY);
 
     gpio_set_direction(PIN_LED, GPIO_MODE_OUTPUT_OD);
     gpio_set_pull_mode(PIN_LED, GPIO_PULLUP_ONLY);
     gpio_set_level(PIN_LED, 0);
 
-    gpio_config_t cfg = {
-        .pin_bit_mask = BIT64(PIN_G02),
-        .mode = GPIO_MODE_INPUT,
-        .pull_up_en = GPIO_PULLUP_DISABLE,
-        .pull_down_en = GPIO_PULLDOWN_DISABLE,
-        .intr_type = GPIO_INTR_DISABLE,
-    };
-    gpio_config(&cfg);
-
-    gpio_deep_sleep_hold_en();
-    
-
     ESP_LOGI(TAG, "Enabling EXT0 wakeup on pin GPIO %d", PIN_Wake);
-    ESP_ERROR_CHECK(esp_deep_sleep_enable_gpio_wakeup(BIT(PIN_Wake), ESP_GPIO_WAKEUP_GPIO_LOW));
-
-    ESP_LOGI(TAG, "Enabling EXT0 wakeup on pin GPIO %d", PIN_G02);
-    ESP_ERROR_CHECK(esp_deep_sleep_enable_gpio_wakeup(BIT(PIN_G02), ESP_GPIO_WAKEUP_GPIO_HIGH));
+    ESP_ERROR_CHECK(esp_deep_sleep_enable_gpio_wakeup(BIT(PIN_Wake), ESP_GPIO_WAKEUP_GPIO_HIGH));
 
 
     Config::getInstance().init();
@@ -69,8 +51,6 @@ extern "C" void app_main(void)
 #endif
     Gochizo::getInstance().setValue(Config::getInstance().getInt("Gochizo", "RrA"), Config::getInstance().getInt("Gochizo", "RrB"), false);
 
-    vTaskDelay(pdMS_TO_TICKS(60 * 3 * 1000));
-    // vTaskDelay(pdMS_TO_TICKS(1 * 3 * 1000));
     while (1)
     {
         check_wakeup();
@@ -109,7 +89,7 @@ void print_wakeup_reason()
 
 static void check_wakeup()
 {
-    if (!gpio_get_level(PIN_Wake) || gpio_get_level(PIN_G02))
+    if (gpio_get_level(PIN_Wake))
     {
         return;
     }

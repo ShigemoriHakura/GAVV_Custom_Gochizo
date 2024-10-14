@@ -74,7 +74,8 @@
         "streambuf": "cpp",
         "cinttypes": "cpp",
         "typeinfo": "cpp",
-        "*.inc": "c"
+        "*.inc": "c",
+        "gpio.h": "c"
     },
     "idf.flashType": "UART",
     "idf.portWin": "COM34"

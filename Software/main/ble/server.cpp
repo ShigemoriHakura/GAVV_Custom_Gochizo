@@ -13,6 +13,8 @@
 #include "../gochizo/gochizo.h"
 
 NimBLECharacteristic *statusCharacteristic;
+NimBLECharacteristic *serialCharacteristic;
+
 
 static const char *TAG_BLE = "BLE";
 
@@ -99,14 +101,14 @@ void MBLEServer::init()
     uint8_t chipid[6];
     esp_efuse_mac_get_default(chipid);
     esp_read_mac(chipid, ESP_MAC_WIFI_STA);
-    char buffer[16];
-    sprintf(buffer, "Gochizo - ");
-    for (int i = 0; i < 3; i++)
-    {
-        sprintf(buffer + strlen(buffer), "%02x", chipid[i]);
-    }
-    ESP_LOGI(TAG_BLE, "Using ID: %s", buffer);
 
+    char hwChipID[12];
+    for (int i = 0; i < 6; i++)
+    {
+        sprintf(hwChipID + strlen(hwChipID), "%02x", chipid[i]);
+    }
+    ESP_LOGI(TAG_BLE, "Chip ID: %s", hwChipID);
+     
     NimBLEDevice::init("GAVV");
     NimBLEServer *pServer = NimBLEDevice::createServer();
     pServer->setCallbacks(new ServerCallbacks());
@@ -118,9 +120,13 @@ void MBLEServer::init()
     statusCharacteristic = pService->createCharacteristic(
         STATUS_UUID,
         NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY | NIMBLE_PROPERTY::WRITE);
-
+    serialCharacteristic = pService->createCharacteristic(
+        SERIAL_UUID,
+        NIMBLE_PROPERTY::READ);
+    
     statusCharacteristic->setCallbacks(new ProvCallbacks());
     statusCharacteristic->addDescriptor(new NimBLE2904());
+    serialCharacteristic->setValue(hwChipID);
     ESP_LOGI(TAG_BLE, "Start BLE");
     pService->start();
 

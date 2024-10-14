@@ -28,7 +28,6 @@ static void roll_New_Gochizo(void *arg, void *usr_data)
     Gochizo::getInstance().roll();
 }
 
-
 void Btn::init()
 {
     if (isInited)
@@ -38,10 +37,12 @@ void Btn::init()
     isInited = true;
     ESP_LOGI(TAG, "Initializing button");
 
+    gpio_set_direction(PIN_Roll, GPIO_MODE_INPUT);
+    gpio_set_pull_mode(PIN_Roll, GPIO_PULLUP_ONLY);
     button_config_t gpio_btn_cfg = {
         .type = BUTTON_TYPE_GPIO,
         .gpio_button_config = {
-            .gpio_num = GPIO_NUM_9,
+            .gpio_num = PIN_Roll,
             .active_level = 0,
         },
     };
