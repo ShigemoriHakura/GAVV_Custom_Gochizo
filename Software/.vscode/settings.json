@@ -78,5 +78,5 @@
         "gpio.h": "c"
     },
     "idf.flashType": "UART",
-    "idf.portWin": "COM34"
+    "idf.portWin": "COM43"
 }
