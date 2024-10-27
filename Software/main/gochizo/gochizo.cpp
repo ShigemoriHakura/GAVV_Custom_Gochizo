@@ -4,6 +4,7 @@
 #include "../config/config.h"
 #include "../peripherals/btn.h"
 #include "../peripherals/tpl0501.h"
+#include "../peripherals/mcp4661.h"
 
 static const char *TAG = "Gochizo";
 
@@ -47,8 +48,8 @@ void Gochizo::setValue(uint8_t RrA, uint8_t RrB, bool needReplug)
 
     Config::getInstance().setInt("Gochizo", "RrA", RrA);
     Config::getInstance().setInt("Gochizo", "RrB", RrB);
-    TPL0501::getInstance().setValue(RrA, PIN_RrA_CS);
-    TPL0501::getInstance().setValue(RrB, PIN_RrB_CS);
+    //TPL0501::getInstance().setValue(RrA, PIN_RrA_CS);
+    MCP4661::getInstance().setValue(RrA, RrB);
 
     if (needReplug)
     {

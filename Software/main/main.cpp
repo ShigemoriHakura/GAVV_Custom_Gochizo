@@ -14,7 +14,7 @@
 #include "config/config.h"
 #include "gochizo/gochizo.h"
 #include "peripherals/btn.h"
-#include "peripherals/tpl0501.h"
+#include "peripherals/mcp4661.h"
 #include "settings.h"
 
 #ifdef BLESERVER
@@ -43,7 +43,8 @@ extern "C" void app_main(void)
 
     Config::getInstance().init();
     Gochizo::getInstance().init();
-    TPL0501::getInstance().init(Res_HOST, PIN_NUM_MOSI, PIN_NUM_CLK);
+    //TPL0501::getInstance().init(Res_HOST, PIN_NUM_MOSI, PIN_NUM_CLK);
+    MCP4661::getInstance().init(PIN_NUM_CLK, PIN_NUM_MOSI);
     Btn::getInstance().init();
 #ifdef BLESERVER
     MBLEServer::getInstance().init();

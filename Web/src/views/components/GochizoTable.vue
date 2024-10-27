@@ -20,7 +20,7 @@
                 <tbody>
                     <tr>
                         <td>
-                            <p class="text-xs font-weight-bold mb-0">242</p>
+                            <p class="text-xs font-weight-bold mb-0">243</p>
                         </td>
                         <td>
                             <p class="text-xs font-weight-bold mb-0">5.6k</p>
@@ -28,7 +28,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <p class="text-xs font-weight-bold mb-0">239</p>
+                            <p class="text-xs font-weight-bold mb-0">240</p>
                         </td>
                         <td>
                             <p class="text-xs font-weight-bold mb-0">6.8k</p>
@@ -36,7 +36,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <p class="text-xs font-weight-bold mb-0">235</p>
+                            <p class="text-xs font-weight-bold mb-0">236</p>
                         </td>
                         <td>
                             <p class="text-xs font-weight-bold mb-0">8.2k</p>
@@ -44,7 +44,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <p class="text-xs font-weight-bold mb-0">230</p>
+                            <p class="text-xs font-weight-bold mb-0">231</p>
                         </td>
                         <td>
                             <p class="text-xs font-weight-bold mb-0">10k</p>
@@ -68,7 +68,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <p class="text-xs font-weight-bold mb-0">204</p>
+                            <p class="text-xs font-weight-bold mb-0">205</p>
                         </td>
                         <td>
                             <p class="text-xs font-weight-bold mb-0">20k</p>
@@ -76,7 +76,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <p class="text-xs font-weight-bold mb-0">195</p>
+                            <p class="text-xs font-weight-bold mb-0">194</p>
                         </td>
                         <td>
                             <p class="text-xs font-weight-bold mb-0">24k</p>
@@ -92,7 +92,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <p class="text-xs font-weight-bold mb-0">156</p>
+                            <p class="text-xs font-weight-bold mb-0">155</p>
                         </td>
                         <td>
                             <p class="text-xs font-weight-bold mb-0">39k</p>
@@ -100,7 +100,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <p class="text-xs font-weight-bold mb-0">135</p>
+                            <p class="text-xs font-weight-bold mb-0">136</p>
                         </td>
                         <td>
                             <p class="text-xs font-weight-bold mb-0">47k</p>
@@ -108,7 +108,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <p class="text-xs font-weight-bold mb-0">97</p>
+                            <p class="text-xs font-weight-bold mb-0">95</p>
                         </td>
                         <td>
                             <p class="text-xs font-weight-bold mb-0">62k</p>
