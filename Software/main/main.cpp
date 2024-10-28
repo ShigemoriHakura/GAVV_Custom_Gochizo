@@ -52,7 +52,7 @@ extern "C" void app_main(void)
 #endif
     Gochizo::getInstance().setValue(Config::getInstance().getInt("Gochizo", "RrA"), Config::getInstance().getInt("Gochizo", "RrB"), false);
 
-    vTaskDelay(pdMS_TO_TICKS(Config::getInstance().getInt("Gochizo", "Sleep") * 3 * 1000));
+    vTaskDelay(pdMS_TO_TICKS(Config::getInstance().getInt("Gochizo", "Sleep") * 1000));
     while (1)
     {
         check_wakeup();
