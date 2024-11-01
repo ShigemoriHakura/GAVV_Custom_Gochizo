@@ -79,5 +79,5 @@
         "span": "cpp"
     },
     "idf.flashType": "UART",
-    "idf.portWin": "COM45"
+    "idf.portWin": "COM14"
 }

@@ -65,11 +65,11 @@ void Gochizo::roll()
         return;
     }
     ESP_LOGI(TAG, "Roll started!");
-    int nRetA = rand() % (sizeof(RrX_final_array) / sizeof(int));
-    int nRetB = rand() % (sizeof(RrX_final_array) / sizeof(int));
-    ESP_LOGI(TAG, "RrA: %d, RrB: %d", RrX_final_array[nRetA], RrX_final_array[nRetB]);
+    int allGochizos = sizeof(AvailableGochizos) / sizeof(int) / 2;
+    int nRet = rand() % allGochizos;
+    ESP_LOGI(TAG, "Selected: %d(%d), RrA: %d, RrB: %d", nRet, allGochizos, AvailableGochizos[nRet][0], AvailableGochizos[nRet][1]);
 
-    Gochizo::getInstance().setValue(RrX_final_array[nRetA], RrX_final_array[nRetB], true);
+    Gochizo::getInstance().setValue(AvailableGochizos[nRet][0], AvailableGochizos[nRet][1], true);
     ESP_LOGI(TAG, "Roll ended!");
 }
 

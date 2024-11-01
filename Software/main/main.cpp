@@ -29,7 +29,7 @@ static void check_wakeup();
 extern "C" void app_main(void)
 {
     ESP_LOGI(TAG, "HW: V2.11");
-    ESP_LOGI(TAG, "FW: V1.0.13");
+    ESP_LOGI(TAG, "FW: V1.0.15");
 
     print_wakeup_reason();
 
@@ -47,8 +47,8 @@ extern "C" void app_main(void)
     MCP4661::getInstance().init(PIN_NUM_CLK, PIN_NUM_MOSI);
     Btn::getInstance().init();
 #ifdef BLESERVER
-    MBLEServer::getInstance().init();
-    MBLEServer::getInstance().syncState();
+    //MBLEServer::getInstance().init();
+    //MBLEServer::getInstance().syncState();
 #endif
     Gochizo::getInstance().setValue(Config::getInstance().getInt("Gochizo", "RrA"), Config::getInstance().getInt("Gochizo", "RrB"), false);
 

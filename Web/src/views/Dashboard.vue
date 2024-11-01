@@ -157,6 +157,18 @@ function changeGozhicoValue(rA, rB) {
   setDeviceStatus(1)
 }
 
+function printAvailableGochizo(){
+  //console.log(gochizoArchive.gochizoArchive)
+  let arrayA = gochizoArchive.gochizoArchive
+  var str = ""
+  for (var element in arrayA){
+    str += `{` + arrayA[element].RrA + `, ` + arrayA[element].RrB + `}, \r\n`
+  }
+  console.log(str)
+  //gochizoArchive.gochizoArchive
+  return str
+}
+
 </script>
 
 <template>
@@ -268,6 +280,7 @@ function changeGozhicoValue(rA, rB) {
                   </tbody>
                 </table>
               </div>
+              {{printAvailableGochizo()}}
             </div>
           </div>
         </div>

@@ -48,6 +48,7 @@ class ProvCallbacks : public NimBLECharacteristicCallbacks
         case 1U:
             Gochizo::getInstance().setValue(rxValue.c_str()[1], rxValue.c_str()[2], true);
             Config::getInstance().setInt("Gochizo", "Sleep", rxValue.c_str()[3]);
+            Config::getInstance().setInt("Gochizo", "Random", rxValue.c_str()[4]);
             ESP_LOGI(TAG_BLE, "Sleep delay: %ds", Config::getInstance().getInt("Gochizo", "Sleep"));
             MBLEServer::getInstance().syncState();
             break;
@@ -85,8 +86,11 @@ void MBLEServer::setState(int stat)
 
 void MBLEServer::syncState()
 {
-    int status = (Config::getInstance().getInt("Gochizo", "Sleep") << 24) | (Config::getInstance().getInt("Gochizo", "RrB") << 16) | Config::getInstance().getInt("Gochizo", "RrA") << 8;
-    ESP_LOGI(TAG_BLE, "Calced status: %02X, int %d", status, status);
+    uint64_t status = (Config::getInstance().getInt("Gochizo", "Random") << 32) 
+        | (Config::getInstance().getInt("Gochizo", "Sleep") << 24) 
+        | (Config::getInstance().getInt("Gochizo", "RrB") << 16) 
+        | Config::getInstance().getInt("Gochizo", "RrA") << 8;
+    ESP_LOGI(TAG_BLE, "Calced status: %02llX, int %lld", status, status);
     statusCharacteristic->setValue(status);
     statusCharacteristic->notify();
 }
