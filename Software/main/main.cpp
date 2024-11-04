@@ -47,8 +47,8 @@ extern "C" void app_main(void)
     MCP4661::getInstance().init(PIN_NUM_CLK, PIN_NUM_MOSI);
     Btn::getInstance().init();
 #ifdef BLESERVER
-    //MBLEServer::getInstance().init();
-    //MBLEServer::getInstance().syncState();
+    MBLEServer::getInstance().init();
+    MBLEServer::getInstance().syncState();
 #endif
     Gochizo::getInstance().setValue(Config::getInstance().getInt("Gochizo", "RrA"), Config::getInstance().getInt("Gochizo", "RrB"), false);
 

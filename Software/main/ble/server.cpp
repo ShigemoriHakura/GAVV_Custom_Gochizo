@@ -46,11 +46,15 @@ class ProvCallbacks : public NimBLECharacteristicCallbacks
         switch (control)
         {
         case 1U:
+            gpio_set_level(PIN_LED, 1);
             Gochizo::getInstance().setValue(rxValue.c_str()[1], rxValue.c_str()[2], true);
             Config::getInstance().setInt("Gochizo", "Sleep", rxValue.c_str()[3]);
             Config::getInstance().setInt("Gochizo", "Random", rxValue.c_str()[4]);
             ESP_LOGI(TAG_BLE, "Sleep delay: %ds", Config::getInstance().getInt("Gochizo", "Sleep"));
+            ESP_LOGI(TAG_BLE, "Random: %d", Config::getInstance().getInt("Gochizo", "Random"));
+            vTaskDelay(pdMS_TO_TICKS(300));
             MBLEServer::getInstance().syncState();
+            gpio_set_level(PIN_LED, 0);
             break;
         case 2U:
             Gochizo::getInstance().plug();
@@ -86,12 +90,16 @@ void MBLEServer::setState(int stat)
 
 void MBLEServer::syncState()
 {
-    uint64_t status = (Config::getInstance().getInt("Gochizo", "Random") << 32) 
-        | (Config::getInstance().getInt("Gochizo", "Sleep") << 24) 
-        | (Config::getInstance().getInt("Gochizo", "RrB") << 16) 
-        | Config::getInstance().getInt("Gochizo", "RrA") << 8;
-    ESP_LOGI(TAG_BLE, "Calced status: %02llX, int %lld", status, status);
-    statusCharacteristic->setValue(status);
+    char* statusC = new char[20];
+    sprintf(statusC, "00%02X%02X%02X%02X", 
+        Config::getInstance().getInt("Gochizo", "RrA"),
+        Config::getInstance().getInt("Gochizo", "RrB"),
+        Config::getInstance().getInt("Gochizo", "Sleep"),
+        Config::getInstance().getInt("Gochizo", "Random")
+    );
+    ESP_LOGI(TAG_BLE, "Calced status: %s", statusC);
+    std::string rxValue = statusC;
+    statusCharacteristic->setValue(rxValue);
     statusCharacteristic->notify();
 }
 

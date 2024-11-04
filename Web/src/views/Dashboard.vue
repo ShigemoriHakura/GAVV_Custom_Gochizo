@@ -25,6 +25,7 @@ const RrB = ref(0);
 const Status = ref(0);
 const Serial = ref(0);
 const Sleep = ref(0);
+const Random = ref(0);
 const zeroPad = (num, places) => String(num).padStart(places, '0')
 
 watch(RrA, (newValue, oldValue) => {
@@ -40,6 +41,22 @@ watch(RrB, (newValue, oldValue) => {
   if(newValue < 0 || newValue > 256){
     console.log('RrB rollback')
     RrB.value = oldValue
+  }
+}, { immediate: true, deep: true })
+
+watch(Sleep, (newValue, oldValue) => {
+  console.log('Sleep Changed', newValue, oldValue)
+  if(newValue < 0 || newValue > 256){
+    console.log('Sleep rollback')
+    Sleep.value = oldValue
+  }
+}, { immediate: true, deep: true })
+
+watch(Random, (newValue, oldValue) => {
+  console.log('Random Changed', newValue, oldValue)
+  if(newValue < 0 || newValue > 256){
+    console.log('Random rollback')
+    Random.value = oldValue
   }
 }, { immediate: true, deep: true })
 
@@ -100,7 +117,7 @@ async function onScanDevice() {
       ])
     })
     .then(characteristicValue => {
-      console.log(characteristicValue[1].buffer)
+      console.log(characteristicValue[0].buffer)
       parseCharacteristic(characteristicValue[0].buffer)
       Serial.value = new TextDecoder().decode(characteristicValue[1].buffer).toUpperCase()
     })
@@ -109,13 +126,17 @@ async function onScanDevice() {
 }
 
 function parseCharacteristic(buffer) {
-  let hexString = buf2hex(buffer)
+  let hexString1 = buf2hex(buffer)
+  console.log("buf2hex: " + hexString1)
+  let hexString = new TextDecoder().decode(buffer).toUpperCase()
   console.log("characteristic: " + hexString)
   isConnected.value = true
   Status.value = parseInt(hexString.substring(0, 2))
   RrA.value = parseInt(hexString.substring(2, 4), 16)
   RrB.value = parseInt(hexString.substring(4, 6), 16)
   Sleep.value = parseInt(hexString.substring(6, 8), 16)
+  console.log(hexString.substring(8, 10))
+  Random.value = parseInt(hexString.substring(8, 10))
 }
 
 function onDisconnected() {
@@ -139,7 +160,12 @@ function setDeviceStatus(status) {
   if (!isConnected.value) {
     return
   }
-  var hexStr = "" + zeroPad(status, 2) + parseInt(RrA.value, 10).toString(16) + parseInt(RrB.value, 10).toString(16) + parseInt(Sleep.value, 10).toString(16) 
+  var hexStr = "" + 
+  zeroPad(status, 2) + 
+  parseInt(RrA.value, 10).toString(16) + 
+  parseInt(RrB.value, 10).toString(16) + 
+  parseInt(Sleep.value, 10).toString(16) + 
+  zeroPad(Random.value, 2)
   console.log(hexStr)
   statusCharacteristic.value.writeValueWithoutResponse(decodeHex(hexStr))
   if (status == 4) {
@@ -168,6 +194,8 @@ function printAvailableGochizo(){
   //gochizoArchive.gochizoArchive
   return str
 }
+
+printAvailableGochizo()
 
 </script>
 
@@ -201,8 +229,10 @@ function printAvailableGochizo(){
                   <input class="form-control" v-model="RrA" placeholder="226">
                   <h5 class="mb-0">RrB: {{ calcSPIToRes(RrB) }}k </h5>
                   <input class="form-control" v-model="RrB" placeholder="196">
-                  <h5 class="mb-0">睡眠延时: {{ Sleep }}秒 </h5>
+                  <h5 class="mb-0">睡眠延时: {{ Sleep }}秒(0-255) </h5>
                   <input class="form-control" v-model="Sleep" placeholder="60">
+                  <h5 class="mb-0">开启随机: {{ Random }}(0关闭，1开启) </h5>
+                  <input class="form-control" v-model="Random" placeholder="0">
                   <br>
                   <argon-button @click="setDeviceStatus(1)" full-width color="warning"
                     variant="contained">设置饱藏</argon-button>
@@ -280,7 +310,6 @@ function printAvailableGochizo(){
                   </tbody>
                 </table>
               </div>
-              {{printAvailableGochizo()}}
             </div>
           </div>
         </div>

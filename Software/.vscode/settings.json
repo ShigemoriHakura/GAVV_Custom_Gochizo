@@ -76,8 +76,26 @@
         "typeinfo": "cpp",
         "*.inc": "c",
         "gpio.h": "c",
-        "span": "cpp"
+        "span": "cpp",
+        "bitset": "cpp",
+        "charconv": "cpp",
+        "chrono": "cpp",
+        "complex": "cpp",
+        "condition_variable": "cpp",
+        "set": "cpp",
+        "format": "cpp",
+        "fstream": "cpp",
+        "future": "cpp",
+        "iomanip": "cpp",
+        "iostream": "cpp",
+        "istream": "cpp",
+        "mutex": "cpp",
+        "semaphore": "cpp",
+        "sstream": "cpp",
+        "stop_token": "cpp",
+        "thread": "cpp",
+        "variant": "cpp"
     },
     "idf.flashType": "UART",
-    "idf.portWin": "COM14"
+    "idf.portWin": "COM41"
 }
