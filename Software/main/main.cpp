@@ -28,8 +28,8 @@ static void check_wakeup();
 
 extern "C" void app_main(void)
 {
-    ESP_LOGI(TAG, "HW: V2.11");
-    ESP_LOGI(TAG, "FW: V1.0.15");
+    ESP_LOGI(TAG, "HW: V3.13");
+    ESP_LOGI(TAG, "FW: V1.0.20");
 
     print_wakeup_reason();
 

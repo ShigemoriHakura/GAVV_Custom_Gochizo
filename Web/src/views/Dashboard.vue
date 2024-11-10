@@ -26,6 +26,7 @@ const Status = ref(0);
 const Serial = ref(0);
 const Sleep = ref(0);
 const Random = ref(0);
+const Shift = ref(0);
 const zeroPad = (num, places) => String(num).padStart(places, '0')
 
 watch(RrA, (newValue, oldValue) => {
@@ -57,6 +58,14 @@ watch(Random, (newValue, oldValue) => {
   if(newValue < 0 || newValue > 256){
     console.log('Random rollback')
     Random.value = oldValue
+  }
+}, { immediate: true, deep: true })
+
+watch(Shift, (newValue, oldValue) => {
+  console.log('Shift Changed', newValue, oldValue)
+  if(newValue < 0 || newValue > 256){
+    console.log('Shift rollback')
+    Shift.value = oldValue
   }
 }, { immediate: true, deep: true })
 
@@ -137,6 +146,7 @@ function parseCharacteristic(buffer) {
   Sleep.value = parseInt(hexString.substring(6, 8), 16)
   console.log(hexString.substring(8, 10))
   Random.value = parseInt(hexString.substring(8, 10))
+  Shift.value = parseInt(hexString.substring(10, 12), 16)
 }
 
 function onDisconnected() {
@@ -165,7 +175,8 @@ function setDeviceStatus(status) {
   parseInt(RrA.value, 10).toString(16) + 
   parseInt(RrB.value, 10).toString(16) + 
   parseInt(Sleep.value, 10).toString(16) + 
-  zeroPad(Random.value, 2)
+  zeroPad(Random.value, 2)+
+  parseInt(Shift.value, 10).toString(16)
   console.log(hexStr)
   statusCharacteristic.value.writeValueWithoutResponse(decodeHex(hexStr))
   if (status == 4) {
@@ -233,6 +244,8 @@ printAvailableGochizo()
                   <input class="form-control" v-model="Sleep" placeholder="60">
                   <h5 class="mb-0">开启随机: {{ Random }}(0关闭，1开启) </h5>
                   <input class="form-control" v-model="Random" placeholder="0">
+                  <h5 class="mb-0">偏移校准: {{ Shift }}(128为中间值) </h5>
+                  <input class="form-control" v-model="Shift" placeholder="0">
                   <br>
                   <argon-button @click="setDeviceStatus(1)" full-width color="warning"
                     variant="contained">设置饱藏</argon-button>

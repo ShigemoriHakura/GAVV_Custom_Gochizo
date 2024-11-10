@@ -50,8 +50,10 @@ class ProvCallbacks : public NimBLECharacteristicCallbacks
             Gochizo::getInstance().setValue(rxValue.c_str()[1], rxValue.c_str()[2], true);
             Config::getInstance().setInt("Gochizo", "Sleep", rxValue.c_str()[3]);
             Config::getInstance().setInt("Gochizo", "Random", rxValue.c_str()[4]);
+            Config::getInstance().setInt("Gochizo", "Shift", rxValue.c_str()[5]);
             ESP_LOGI(TAG_BLE, "Sleep delay: %ds", Config::getInstance().getInt("Gochizo", "Sleep"));
             ESP_LOGI(TAG_BLE, "Random: %d", Config::getInstance().getInt("Gochizo", "Random"));
+            ESP_LOGI(TAG_BLE, "Shift: %d", Config::getInstance().getInt("Gochizo", "Shift"));
             vTaskDelay(pdMS_TO_TICKS(300));
             MBLEServer::getInstance().syncState();
             gpio_set_level(PIN_LED, 0);
@@ -91,11 +93,12 @@ void MBLEServer::setState(int stat)
 void MBLEServer::syncState()
 {
     char* statusC = new char[20];
-    sprintf(statusC, "00%02X%02X%02X%02X", 
+    sprintf(statusC, "00%02X%02X%02X%02X%02X", 
         Config::getInstance().getInt("Gochizo", "RrA"),
         Config::getInstance().getInt("Gochizo", "RrB"),
         Config::getInstance().getInt("Gochizo", "Sleep"),
-        Config::getInstance().getInt("Gochizo", "Random")
+        Config::getInstance().getInt("Gochizo", "Random"),
+        Config::getInstance().getInt("Gochizo", "Shift")
     );
     ESP_LOGI(TAG_BLE, "Calced status: %s", statusC);
     std::string rxValue = statusC;

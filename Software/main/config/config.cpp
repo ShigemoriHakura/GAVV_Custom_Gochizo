@@ -34,19 +34,21 @@ void Config::init()
         ESP_ERROR_CHECK(err);
     }
     ESP_ERROR_CHECK(err);
-    if (Config::getInstance().getString("Gochizo", "Version") != "1.0.6")
+    if (Config::getInstance().getString("Gochizo", "Version") != "1.0.7")
     {
         Config::getInstance().erase("Gochizo", "RrA");
         Config::getInstance().erase("Gochizo", "RrB");
         Config::getInstance().erase("Gochizo", "Sleep");
         Config::getInstance().erase("Gochizo", "Version");
         Config::getInstance().erase("Gochizo", "Random");
+        Config::getInstance().erase("Gochizo", "Shift");
         ESP_LOGI(TAG_Config, "Reloading NVS partition");
         Config::getInstance().setInt("Gochizo", "RrA", 226);
         Config::getInstance().setInt("Gochizo", "RrB", 196);
         Config::getInstance().setInt("Gochizo", "Sleep", 60);
         Config::getInstance().setInt("Gochizo", "Random", 0);
-        Config::getInstance().setString("Gochizo", "Version", "1.0.6");
+        Config::getInstance().setInt("Gochizo", "Shift", 128);
+        Config::getInstance().setString("Gochizo", "Version", "1.0.7");
     }
     ESP_LOGI(TAG_Config, "Config version: %s", Config::getInstance().getString("Gochizo", "Version").c_str());
     ESP_LOGI(TAG_Config, "RrA: %d, RrB: %d", Config::getInstance().getInt("Gochizo", "RrA"), Config::getInstance().getInt("Gochizo", "RrB"));

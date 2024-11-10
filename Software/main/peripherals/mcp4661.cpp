@@ -3,6 +3,7 @@
 #include "driver/spi_master.h"
 #include "driver/gpio.h"
 #include "driver/i2c_master.h"
+#include "../config/config.h"
 
 static const char *TAG = "MCP4661";
 
@@ -152,8 +153,10 @@ bool MCP4661::setValue(uint8_t resAValue, uint8_t resBValue)
         return false;
     }
 
-    resAValue = 257 - resAValue;
-    resBValue = 257 - resBValue;
+    int shift = 128 - Config::getInstance().getInt("Gochizo", "Shift");
+    ESP_LOGI(TAG, "Loaded shift %d", shift);
+    resAValue = 257 - shift - resAValue;
+    resBValue = 257 - shift - resBValue;
     writeToRegister(buildFirstByte(Register::Wiper0RAM + 0, Command::Write, resAValue), resAValue);
     writeToRegister(buildFirstByte(Register::Wiper0RAM + 1, Command::Write, resBValue), resBValue);
     ESP_LOGI(TAG, "Set 2iper %d RAM and ROM using %d", 0, resAValue);
